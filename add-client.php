@@ -8,6 +8,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name  = $_POST['name'] ?? '';
     $email = $_POST['email'] ?? '';
     $phone = $_POST['phone'] ?? '';
+
+    if ($name === '') {
+        $errors[] = 'Name is required.';
+    }
+    if ($email === '') {
+        $errors[] = 'Email is required.';
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Email is not valid.';
+    }
     if (empty($errors)) {
         $stmt = $pdo->prepare("INSERT INTO clients (name, email, phone) VALUES (?, ?, ?)");
         $stmt->execute([$name, $email, $phone]);
@@ -15,6 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 }
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
