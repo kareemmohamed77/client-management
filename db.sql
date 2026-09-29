@@ -1,0 +1,18 @@
+CREATE DATABASE client_management;
+USE client_management;
+CREATE TABLE clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE accounts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT NOT NULL,
+    account_name VARCHAR(100) NOT NULL,
+    account_number VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (client_id) REFERENCES clients(id) ON DELETE CASCADE
+);
